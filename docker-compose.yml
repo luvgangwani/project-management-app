@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  project-management-app-mysql:
+    image: mysql:8.0.32
+    ports:
+      - '3307:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    expose:
+      - 3307
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_HOST=${MYSQL_HOST}
