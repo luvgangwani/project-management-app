@@ -4,10 +4,11 @@ services:
   project-management-app-mysql:
     image: mysql:8.0.32
     ports:
-      - '3307:3306'
+      - '3306:3306'
+    container_name: project-management-app-mysql-container
     command: --default-authentication-plugin=mysql_native_password
     expose:
-      - 3307
+      - 3306
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -17,11 +18,21 @@ services:
     build: ./next-js
     ports:
       - "5122:3000"
-    container_name: project-management-app-next-js-container_name
+    container_name: project-management-app-next-js-container
     volumes:
       - ./next-js:/app/next-js
       - /app/next-js/node_modules
     depends_on:
       - project-management-app-mysql
+    expose:
+      - 5122
+    environment:
+      - MYSQL_HOST=${MYSQL_NEXT_JS_HOST}
+      - MYSQL_ROOT_USERNAME=${MYSQL_ROOT_USERNAME}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_CONNECTION_LIMIT=${MYSQL_CONNECTION_LIMIT}
+       
     stdin_open: true
     tty: true
