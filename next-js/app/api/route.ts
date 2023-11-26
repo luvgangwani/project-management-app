@@ -2,6 +2,6 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     return NextResponse.json({
-        message: 'Project Management Tool API'
+        message: 'Project Management App API'
     })
 }
