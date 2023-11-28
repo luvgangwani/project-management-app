@@ -1,3 +1,4 @@
+import { genSaltSync, hashSync } from 'bcrypt';
 import { IUsers } from '../interfaces';
 import UsersService from '../services/Users'
 
@@ -8,6 +9,11 @@ class Users {
     }
 
     register(user: IUsers) {
+        const salt = genSaltSync(10)
+
+        // hash the password
+        user.password = hashSync(user.password, salt)
+        console.log(user)
         return this
         .service
         .register(user)
