@@ -13,13 +13,22 @@ class Users {
 
         // hash the password
         user.password = hashSync(user.password, salt)
-        console.log(user)
         return this
         .service
         .register(user)
         .then(data => data)
         .catch(error => {
             throw new Error(`Error registering user: ${error}`)
+        })
+    }
+
+    getUserByUsername(username: string) {
+        return this
+        .service
+        .getUserByUsername(username)
+        .then(data => data)
+        .catch(error => {
+            throw new Error(`Error fetching user: ${error}`)
         })
     }
 }
