@@ -10,10 +10,12 @@ export async function POST(req: NextRequest) {
         const response = await usersController.register(user as IUsers)
 
         return NextResponse.json({
+            success: true,
             response
         }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
+            success: false,
             error
         }, { status: 401 })
     }
