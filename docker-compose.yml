@@ -33,6 +33,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_PORT=${MYSQL_PORT}
       - MYSQL_CONNECTION_LIMIT=${MYSQL_CONNECTION_LIMIT}
+      - JWT_SECRET=${JWT_SECRET}
        
     stdin_open: true
     tty: true

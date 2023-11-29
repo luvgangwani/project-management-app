@@ -5,9 +5,9 @@ import { RowDataPacket } from "mysql2";
 
 const usersController = new Users
 
+// Just indicates whether or not a user with a username exists
 export async function GET(req: NextRequest, { params }: UsernameRouteParam) {
     const { username } = params
-    console.log(username)
 
     const response = (await usersController.getUserByUsername(username)) as RowDataPacket
 
@@ -15,12 +15,10 @@ export async function GET(req: NextRequest, { params }: UsernameRouteParam) {
         if (response.length === 1)
             return NextResponse.json({
                 success: true,
-                response: response[0]
             }, { status: 200 })
         else
             return NextResponse.json({
                 success: false,
-                response: {}
             }, { status: 404 })
     } catch (error) {
         return NextResponse.json({
