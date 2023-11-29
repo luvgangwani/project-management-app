@@ -58,6 +58,7 @@ class Users {
 
     login(creds: ICreds) {
         return this
+        .service
         .getUserByUsername(creds.username)
         .then(data => {
             const userResponse = data as RowDataPacket
