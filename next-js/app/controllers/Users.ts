@@ -2,7 +2,7 @@ import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { Secret, sign } from 'jsonwebtoken'
 import { ICreds, IUsers } from '../interfaces';
 import UsersService from '../services/Users'
-import { RowDataPacket } from 'mysql2';
+import { OkPacketParams, RowDataPacket } from 'mysql2';
 
 
 class Users {
@@ -19,7 +19,16 @@ class Users {
         return this
         .service
         .register(user)
-        .then(data => data)
+        .then(data => {
+            const response = data as OkPacketParams
+            if (response.insertId) {
+                return {
+                    message: `Congratulations ${user.firstName}! Your registration is complete.`
+                }
+            } else {
+                throw new Error('Sorry, we are unable to register you at the moment. Please try again in sometime.')
+            }
+        })
         .catch(error => {
             throw new Error(`Error registering user: ${error}`)
         })
