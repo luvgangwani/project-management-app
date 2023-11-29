@@ -38,7 +38,19 @@ class Users {
         return this
         .service
         .getUserByUsername(username)
-        .then(data => data)
+        .then(data => {
+            const response = data as RowDataPacket
+            if (response.length <= 0) {
+                return {
+                    userExists: false,
+                    message: `Sorry, we couldn't find a user with username "${username}".`
+                }
+            } else if (response.length === 1) {
+                return {
+                    userExists: true
+                }
+            }
+        })
         .catch(error => {
             throw new Error(`Error fetching user: ${error}`)
         })
@@ -67,6 +79,9 @@ class Users {
                     }
                 }
             }
+        })
+        .catch(error => {
+            throw new Error(`Error logging in: ${error}`)
         })
     }
 }

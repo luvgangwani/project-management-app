@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UsernameRouteParam } from "../../types";
 import Users from "@/app/controllers/Users";
-import { RowDataPacket } from "mysql2";
+import { IUserExists } from "@/app/interfaces";
 
 const usersController = new Users
 
@@ -9,21 +9,18 @@ const usersController = new Users
 export async function GET(req: NextRequest, { params }: UsernameRouteParam) {
     const { username } = params
 
-    const response = (await usersController.getUserByUsername(username)) as RowDataPacket
-
+    
     try {
-        if (response.length === 1)
-            return NextResponse.json({
-                success: true,
-            }, { status: 200 })
-        else
-            return NextResponse.json({
-                success: false,
-            }, { status: 404 })
+        const { userExists, message } = await usersController.getUserByUsername(username) as IUserExists
+        return NextResponse.json({
+            success: userExists,
+            userExists,
+            message,
+        }, { status: userExists ? 200 : 404 })
     } catch (error) {
         return NextResponse.json({
             success: false,
-            error
+            error: (error as Error).message
         }, { status: 500 })
     }
 }

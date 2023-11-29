@@ -10,6 +10,11 @@ export interface IUsers {
     updated?: string,
 }
 
+export interface IUserExists {
+    userExists: boolean,
+    message?: string
+}
+
 export interface ICreds {
     username: string,
     password: string
