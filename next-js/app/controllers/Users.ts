@@ -57,6 +57,10 @@ class Users {
     }
 
     login(creds: ICreds) {
+        // check password is provided
+        // the assumption here is that username check will be a preliminary one before even hitting the login endpoint
+
+        // check for any password format restrictions
         return this
         .service
         .getUserByUsername(creds.username)
@@ -76,7 +80,8 @@ class Users {
                     }
                 } else {
                     return {
-                        token: null
+                        token: null,
+                        // add a message saying login was unsuccesful
                     }
                 }
             }
