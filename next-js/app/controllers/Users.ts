@@ -3,6 +3,7 @@ import { Secret, sign } from 'jsonwebtoken'
 import { ICreds, IUsers } from '../interfaces';
 import UsersService from '../services/Users'
 import { OkPacketParams, RowDataPacket } from 'mysql2';
+import ProjectManagementAppAPIError from '../errors/ProjectManagementAppAPIError';
 
 
 class Users {
@@ -26,34 +27,31 @@ class Users {
                     message: `Congratulations ${user.firstName}! Your registration is complete.`
                 }
             } else {
-                throw new Error('Sorry, we are unable to register you at the moment. Please try again in sometime.')
+                throw new ProjectManagementAppAPIError('Sorry, we are unable to register you at the moment. Please try again in sometime.', 401)
             }
         })
         .catch(error => {
-            throw new Error(`Error registering user: ${error}`)
+            throw new ProjectManagementAppAPIError(`Error registering user: ${error}`)
         })
     }
 
-    getUserByUsername(username: string) {
-        return this
-        .service
-        .getUserByUsername(username)
-        .then(data => {
-            const response = data as RowDataPacket
-            if (response.length <= 0) {
-                return {
-                    userExists: false,
-                    message: `Sorry, we couldn't find a user with username "${username}".`
-                }
-            } else if (response.length === 1) {
-                return {
-                    userExists: true
-                }
+    async getUserByUsername(username: string) {
+        let statusCode = -1
+        let data
+        try {
+            data = await this
+                .service
+                .getUserByUsername(username);
+            } catch (error) {
+                throw new ProjectManagementAppAPIError(`Error fetching user: ${error}`, statusCode);
             }
-        })
-        .catch(error => {
-            throw new Error(`Error fetching user: ${error}`)
-        })
+            const response = data as RowDataPacket;
+            if (response.length <= 0) {
+                statusCode = 404
+                throw new ProjectManagementAppAPIError(`Sorry, we couldn't find a user with username "${username}".`, statusCode);
+            }
+            return response.length === 1 // since there's a unique key constraint on the DB field
+                ;
     }
 
     login(creds: ICreds) {
