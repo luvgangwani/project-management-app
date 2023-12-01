@@ -12,43 +12,42 @@ class Users {
         this.service = new UsersService();
     }
 
-    register(user: IUsers) {
+    async register(user: IUsers) {
+        let data
         const salt = genSaltSync(10)
 
         // hash the password
         user.password = hashSync(user.password!, salt)
-        return this
-        .service
-        .register(user)
-        .then(data => {
-            const response = data as OkPacketParams
-            if (response.insertId) {
-                return {
-                    message: `Congratulations ${user.firstName}! Your registration is complete.`
-                }
-            } else {
-                throw new ProjectManagementAppAPIError('Sorry, we are unable to register you at the moment. Please try again in sometime.', 401)
-            }
-        })
-        .catch(error => {
+
+        try {
+            data = await this
+            .service
+            .register(user)
+        } catch (error) {
             throw new ProjectManagementAppAPIError(`Error registering user: ${error}`)
-        })
+        }
+        const response = data as OkPacketParams
+        if (response.insertId) {
+            return {
+                message: `Congratulations ${user.firstName}! Your registration is complete.`
+            }
+        } else {
+            throw new ProjectManagementAppAPIError('Sorry, we are unable to register you at the moment. Please try again in sometime.', 401)
+        }
     }
 
     async getUserByUsername(username: string) {
-        let statusCode = -1
         let data
         try {
             data = await this
                 .service
                 .getUserByUsername(username);
             } catch (error) {
-                throw new ProjectManagementAppAPIError(`Error fetching user: ${error}`, statusCode);
+                throw new ProjectManagementAppAPIError(`Error fetching user: ${error}`);
             }
             const response = data as RowDataPacket;
             if (response.length <= 0) {
-                statusCode = 404
-                throw new ProjectManagementAppAPIError(`Sorry, we couldn't find a user with username "${username}".`, statusCode);
+                throw new ProjectManagementAppAPIError(`Sorry, we couldn't find a user with username "${username}".`, 404);
             }
             return response.length === 1 // since there's a unique key constraint on the DB field
                 ;
