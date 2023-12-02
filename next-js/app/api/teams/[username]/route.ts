@@ -1,22 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UsernameRouteParam } from "../../types";
-import Users from "@/app/controllers/Users";
+import Teams from "@/app/controllers/Teams";
 import ProjectManagementAppAPIError from "@/app/errors/ProjectManagementAppAPIError";
 
-const usersController = new Users
+const teamsController = new Teams()
 
-// Just indicates whether or not a user with a username exists
 export async function GET(req: NextRequest, { params }: UsernameRouteParam) {
     const { username } = params
+
     try {
-        const success = await usersController.doesUsernameExist(username)
+        const response = await teamsController.getTeamsByUsername(username)
         return NextResponse.json({
-            success,
+            success: true,
+            ... response
         }, { status: 200 })
     } catch (error) {
         const { message, statusCode } = error as ProjectManagementAppAPIError
         return NextResponse.json({
-            success: false,
+            succes: false,
             error: message
         }, { status: statusCode })
     }

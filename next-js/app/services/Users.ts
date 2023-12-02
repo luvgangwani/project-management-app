@@ -41,7 +41,9 @@ class Users {
                     username,
                     password,
                     profession,
-                    role
+                    role,
+                    created,
+                    updated
                 from vw_users
                 where username = ?
                 `,

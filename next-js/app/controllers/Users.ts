@@ -57,7 +57,7 @@ class Users {
         }
     }
 
-    async getUserByUsername(username: string) {
+    async doesUsernameExist(username: string) {
         let data
         
         if (!username)

@@ -26,6 +26,29 @@ class Teams {
             )
         })
     }
+
+    getTeamsByUsername(username: string) {
+        return new Promise((resolve, reject) => {
+            this
+            .pool
+            .query(
+                `select
+                id,
+                name,
+                description,
+                manager_username,
+                created,
+                updated
+                from vw_teams
+                where manager_username = ?`,
+                [username],
+                (errors, results, _fields) => {
+                    if (errors) reject(errors)
+                    if (results) resolve(results)
+                }
+            )
+        })
+    }
 }
 
 export default Teams;

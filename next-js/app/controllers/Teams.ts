@@ -1,7 +1,7 @@
 import TeamsService from '@/app/services/Teams';
 import { ITeams } from '../interfaces';
 import ProjectManagementAppAPIError from '../errors/ProjectManagementAppAPIError';
-import { OkPacketParams } from 'mysql2';
+import { OkPacketParams, RowDataPacket } from 'mysql2';
 
 class Teams {
     private service: TeamsService;
@@ -30,6 +30,31 @@ class Teams {
         } else {
             throw new ProjectManagementAppAPIError('Sorry, we are unable to create a new team currently. Please try again in some time.')
         }
+    }
+
+    async getTeamsByUsername(username: string) {
+        let data;
+        if (!username)
+            throw new ProjectManagementAppAPIError('Please provide a username.')
+        try {
+            data = await this
+                    .service
+                    .getTeamsByUsername(username)
+        } catch (error) {
+            throw new ProjectManagementAppAPIError(`Error fetching teams' information for "${username}": ${error}`)
+        }
+
+        const response = data as RowDataPacket
+        if (response.length > 0) {
+            return {
+                teams: response
+            }
+        } else {
+            return {
+                message: 'You have not created any teams.'
+            }
+        }
+
     }
 }
 
