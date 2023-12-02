@@ -53,7 +53,7 @@ class Users {
                 message: `Congratulations ${user.firstName}! Your registration is complete.`
             }
         } else {
-            throw new ProjectManagementAppAPIError('Sorry, we are unable to register you at the moment. Please try again in sometime.', 401)
+            throw new ProjectManagementAppAPIError('Sorry, we are unable to register you at the moment. Please try again in some time.')
         }
     }
 

@@ -35,19 +35,15 @@ class Users {
             .pool
             .query(
                 `select
-                    u.id,
-                    u.first_name,
-                    u.last_name,
-                    u.username,
-                    u.password,
-                    p.name as profession,
-                    r.name as role
-                from tbl_users as u
-                inner join tbl_professions as p
-                on u.profession_id = p.id
-                inner join tbl_roles as r
-                on u.role_id = r.id
-                where u.username = ?
+                    id,
+                    first_name,
+                    last_name,
+                    username,
+                    password,
+                    profession,
+                    role
+                from vw_users
+                where username = ?
                 `,
                 [username],
                 (error, results, _fields) => {

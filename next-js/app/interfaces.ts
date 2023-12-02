@@ -10,6 +10,15 @@ export interface IUsers {
     updated?: string,
 }
 
+export interface ITeams {
+    id?: number,
+    name: string,
+    description: string,
+    managerUsername: string,
+    created?: string,
+    updated?: string,
+}
+
 export interface ICreds {
     username: string,
     password: string

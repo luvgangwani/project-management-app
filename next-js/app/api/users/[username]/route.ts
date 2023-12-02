@@ -14,7 +14,6 @@ export async function GET(req: NextRequest, { params }: UsernameRouteParam) {
             success,
         }, { status: 200 })
     } catch (error) {
-        console.log(error instanceof ProjectManagementAppAPIError)
         const { message, statusCode } = error as ProjectManagementAppAPIError
         return NextResponse.json({
             success: false,
