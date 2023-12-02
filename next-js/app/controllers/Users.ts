@@ -75,21 +75,25 @@ class Users {
                 throw new ProjectManagementAppAPIError(`Sorry, we couldn't find a user with username "${username}".`, 404);
             }
             return response.length === 1 // since there's a unique key constraint on the DB field
-                ;
     }
 
-    login(creds: ICreds) {
+    async login(creds: ICreds) {
+        let data
         // check password is provided
         // the assumption here is that username check will be a preliminary one before even hitting the login endpoint
         if (!creds.password) {
             throw new ProjectManagementAppAPIError(`Please provide a password.`, 401)
         }
 
-        return this
-        .service
-        .getUserByUsername(creds.username)
-        .then(data => {
-            const userResponse = data as RowDataPacket
+        try {     
+            data = await this
+            .service
+            .getUserByUsername(creds.username)
+        } catch (error) {
+            throw new ProjectManagementAppAPIError(`Error logging in: ${error}`)
+        }
+
+        const userResponse = data as RowDataPacket
             if (userResponse.length === 1) {
                 const fetchedUser = userResponse[0] as IUsers
                 const comparisonResult = compareSync(creds.password, fetchedUser.password!)
@@ -103,16 +107,9 @@ class Users {
                         token
                     }
                 } else {
-                    return {
-                        token: null,
-                        // add a message saying login was unsuccesful
-                    }
+                    throw new ProjectManagementAppAPIError('Password does not match.', 403)
                 }
             }
-        })
-        .catch(error => {
-            throw new Error(`Error logging in: ${error}`)
-        })
     }
 }
 

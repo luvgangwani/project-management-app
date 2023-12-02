@@ -1,4 +1,5 @@
 import Users from "@/app/controllers/Users";
+import ProjectManagementAppAPIError from "@/app/errors/ProjectManagementAppAPIError";
 import { IAuth, ICreds } from "@/app/interfaces";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,9 +20,10 @@ export async function POST(req: NextRequest) {
             token
         }, { status })
     } catch (error) {
+        const { message, statusCode } = error as ProjectManagementAppAPIError
         return NextResponse.json({
             success: false,
-            error: (error as Error).message,
-        }, { status: 500 })
+            error: message,
+        }, { status: statusCode })
     }
 }

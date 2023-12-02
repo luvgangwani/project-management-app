@@ -1,5 +1,3 @@
-import { ProjectManagementAppAPIErrorOptions } from "./types";
-
 class ProjectManagementAppAPIError extends Error {
     statusCode: number;
     constructor(message: string, statusCode?: number) {
