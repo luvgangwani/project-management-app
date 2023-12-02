@@ -16,8 +16,29 @@ class Users {
         let data
         const salt = genSaltSync(10)
 
-        // hash the password
-        user.password = hashSync(user.password!, salt)
+        // check that the first name is provided
+        if (!user.firstName)
+            throw new ProjectManagementAppAPIError('Please provide first name.', 401)
+
+        // check that the last name is provided
+        if (!user.lastName)
+            throw new ProjectManagementAppAPIError('Please provide last name.', 401)
+
+        // check that the username is provided
+        if (!user.username)
+            throw new ProjectManagementAppAPIError('Please provide username.', 401)
+
+        // check if password is provided
+        if (!user.password)
+            throw new ProjectManagementAppAPIError('Please provide a password.', 401)
+
+        // check the password format
+        const passwordRegEx = new RegExp(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,32}/gm)
+        if (!passwordRegEx.test(user.password))
+            throw new ProjectManagementAppAPIError('Password format seems to be incorrect. There should be at least 1 lowecase character, 1 uppercase character, 1 numeric value and 1 special character.', 401)
+        else
+            // hash the password
+            user.password = hashSync(user.password!, salt)
 
         try {
             data = await this
@@ -38,6 +59,10 @@ class Users {
 
     async getUserByUsername(username: string) {
         let data
+        
+        if (!username)
+            throw new ProjectManagementAppAPIError('Please provide a username.', 401)
+
         try {
             data = await this
                 .service
@@ -56,8 +81,10 @@ class Users {
     login(creds: ICreds) {
         // check password is provided
         // the assumption here is that username check will be a preliminary one before even hitting the login endpoint
+        if (!creds.password) {
+            throw new ProjectManagementAppAPIError(`Please provide a password.`, 401)
+        }
 
-        // check for any password format restrictions
         return this
         .service
         .getUserByUsername(creds.username)
