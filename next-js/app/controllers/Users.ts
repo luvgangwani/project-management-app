@@ -1,5 +1,4 @@
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
-import { Secret, sign } from 'jsonwebtoken'
 import { ICreds, IUsers } from '../interfaces';
 import UsersService from '../services/Users'
 import { OkPacketParams, RowDataPacket } from 'mysql2';
@@ -77,11 +76,11 @@ class Users {
             return response.length === 1 // since there's a unique key constraint on the DB field
     }
 
-    async login(creds: ICreds) {
+    async login(creds: Record<"password" | "username", string> | undefined) {
         let data
         // check password is provided
         // the assumption here is that username check will be a preliminary one before even hitting the login endpoint
-        if (!creds.password) {
+        if (!creds?.password) {
             throw new ProjectManagementAppAPIError(`Please provide a password.`, 401)
         }
 
@@ -100,11 +99,9 @@ class Users {
                 if (comparisonResult) {
                     // delete the password and tokenize the fetched user info
                     fetchedUser.password = undefined
-                    const token = sign(fetchedUser, process.env.JWT_SECRET as Secret, {
-                        expiresIn: '1h'
-                    })
                     return {
-                        token
+                        id: fetchedUser.id,
+                        email: fetchedUser.username
                     }
                 } else {
                     throw new ProjectManagementAppAPIError('Password does not match.', 403)
