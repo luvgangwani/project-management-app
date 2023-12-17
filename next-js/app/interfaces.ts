@@ -27,3 +27,11 @@ export interface ICreds {
 export interface IAuth {
     token: string | null,
 }
+
+export interface IProjects {
+    id?: number,
+    name: string,
+    managerUsername: string,
+    created?: string,
+    update?: string,
+}
