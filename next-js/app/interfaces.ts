@@ -35,3 +35,17 @@ export interface IProjects {
     created?: string,
     update?: string,
 }
+
+export interface ITasks {
+    id?: number,
+    name: string,
+    description?: string,
+    statusId: number,
+    storyPoints: number,
+    typeId: number,
+    projectId: number,
+    assigneeUsername: string,
+    reporterUsername: string,
+    created?: string,
+    updated?: string,
+}
