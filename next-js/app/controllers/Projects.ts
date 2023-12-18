@@ -1,7 +1,7 @@
 import ProjectsService from "@/app/services/Projects";
 import { IProjects } from "../interfaces";
 import ProjectManagementAppAPIError from "../errors/ProjectManagementAppAPIError";
-import { OkPacketParams } from "mysql2";
+import { OkPacketParams, RowDataPacket } from "mysql2";
 
 class Projects {
   private service: ProjectsService;
@@ -33,6 +33,34 @@ class Projects {
         }
     } else {
         throw new ProjectManagementAppAPIError('Sorry, we are unable to create a new team currently. Please try again in some time.')
+    }
+  }
+
+  async getProjectsByUsername(username: string) {
+    if (!username) {
+      throw new ProjectManagementAppAPIError('Username not provided. Please provide one.', 400)
+    }
+
+    let data;
+
+    try {
+      data = await this
+              .service
+              .getProjectsByUsername(username)
+    } catch (error) {
+      throw new ProjectManagementAppAPIError(`Unexpected error loading projects. Please try again later. Details: ${error}`)
+    }
+
+    const response = data as RowDataPacket
+
+    if (response.length > 0) {
+      return {
+        projects: response
+      }
+    } else {
+      return {
+        message: 'You have not created any projects.'
+      }
     }
   }
 }

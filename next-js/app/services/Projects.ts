@@ -26,6 +26,21 @@ class Projects {
             )
         })
     }
+
+    getProjectsByUsername(username: string) {
+        return new Promise((resolve, reject) => {
+            this
+            .pool
+            .query(
+                'select id, name, manager_username, created, updated from vw_projects where manager_username=?',
+                [username],
+                (error, results, _fields) => {
+                    if (error) reject(error)
+                    if (results) resolve(results)
+                }
+            )
+        })
+    }
 }
 
 export default Projects
