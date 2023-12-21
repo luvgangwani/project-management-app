@@ -7,5 +7,7 @@ export const config = {
         '/api/teams/:username*',
         '/api/projects',
         '/api/projects/:username*',
+        '/api/tasks',
+        '/api/tasks/:username*'
     ]
 }

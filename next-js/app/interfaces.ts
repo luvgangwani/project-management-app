@@ -41,7 +41,7 @@ export interface ITasks {
     name: string,
     description?: string,
     statusId: number,
-    storyPoints: number,
+    storyPoints?: number,
     typeId: number,
     projectId: number,
     assigneeUsername: string,
