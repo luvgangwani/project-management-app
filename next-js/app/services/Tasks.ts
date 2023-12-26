@@ -1,6 +1,7 @@
-import { Pool } from "mysql2";
+import { Pool, RowDataPacket } from "mysql2";
 import pool from "./db";
 import { ITasks } from "../interfaces";
+import { TasksResponse } from "../api/types";
 
 class Tasks {
     private pool: Pool
@@ -27,6 +28,37 @@ class Tasks {
                 (error, results, _fields) => {
                     if (error) reject(error)
                     if (results) resolve(results)
+                }
+            )
+        })
+    }
+
+    getTasksByUsername(username: string) {
+        const response = {} as TasksResponse
+        return new Promise((resolve, reject) => {
+            this
+            .pool
+            .query(
+                'select * from vw_tasks where assignee_username = ?',
+                [username],
+                (errorAssignee, resultsAssignee, _fieldsAssignee) => {
+                    if (resultsAssignee) {
+                        response.assigned = resultsAssignee as RowDataPacket
+                        this
+                        .pool
+                        .query(
+                            'select * from vw_tasks where reporter_username = ?',
+                            [username],
+                            (errorReporter, resultsReporter, _fieldsReporter) => {
+                                if (resultsReporter) {
+                                    response.reported = resultsReporter as RowDataPacket
+                                    resolve(response)
+                                }
+                                if (errorReporter) reject(errorReporter)
+                            }
+                        )
+                    }
+                    if (errorAssignee) reject(errorAssignee)
                 }
             )
         })

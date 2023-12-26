@@ -1,7 +1,8 @@
 import TasksService from '@/app/services/Tasks'
 import { ITasks } from '../interfaces'
 import ProjectManagementAppAPIError from '../errors/ProjectManagementAppAPIError'
-import { OkPacketParams } from 'mysql2'
+import { OkPacketParams, RowDataPacket } from 'mysql2'
+import { TasksResponse } from '../api/types'
 class Tasks {
     private service: TasksService
 
@@ -43,6 +44,47 @@ class Tasks {
             }
         } else {
             throw new ProjectManagementAppAPIError('Sorry, we are unable to create a task currently. Please try again in some time.')
+        }
+    }
+
+    async getTasksByUsername(username: string) {
+        let data;
+        if (!username) {
+            throw new ProjectManagementAppAPIError('Please provide a valid username.', 400)
+        }
+
+        try {
+            data = await this
+                        .service
+                        .getTasksByUsername(username)
+        } catch (error) {
+            throw new ProjectManagementAppAPIError(`Unexpected error occurred while fetching tasks. Please try again. Details: ${error}`)
+        }
+
+        const response = data as TasksResponse
+
+        if (response.assigned.length <=0 && response.reported.length <= 0) {
+            return {
+                message: 'You don\'t have any assigned or reported tasks.'
+            }
+        }
+
+        if (response.assigned.length > 0 && response.reported.length <= 0) {
+            return {
+                response,
+                message: 'You have not reported any tasks.'
+            }
+        }
+
+        if (response.assigned.length <=0 && response.reported.length > 0) {
+            return {
+                response,
+                message: 'You have no tasks assigned.'
+            }
+        }
+
+        return {
+            response
         }
     }
 }
