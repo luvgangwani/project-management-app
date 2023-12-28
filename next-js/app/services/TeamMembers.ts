@@ -9,7 +9,6 @@ class TeamMembers {
     }
 
     add(teamId: number, memberUsername: string, managerUsername: string) {
-        console.log(teamId, memberUsername, managerUsername)
         return new Promise((resolve, reject) => {
             this
             .pool
