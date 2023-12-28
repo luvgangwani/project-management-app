@@ -6,6 +6,12 @@ export type UsernameRouteParam = {
     }
 }
 
+export type TeamIdRouteParam = {
+    params: {
+        teamId: number
+    }
+}
+
 export type TasksResponse = {
     assigned: RowDataPacket,
     reported: RowDataPacket

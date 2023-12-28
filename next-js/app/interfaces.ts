@@ -49,3 +49,11 @@ export interface ITasks {
     created?: string,
     updated?: string,
 }
+
+export interface ITeamMembers {
+    teamId: number,
+    memberUsername: string,
+    managerUsername: string,
+    created?: string,
+    updated?: string,
+}
