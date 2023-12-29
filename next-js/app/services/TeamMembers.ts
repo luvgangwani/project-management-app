@@ -26,6 +26,36 @@ class TeamMembers {
             )
         })
     }
+
+    getMembersInATeam(teamId: number) {
+        return new Promise((resolve, reject) => {
+            this
+            .pool
+            .query(
+                `select
+                    teamId,
+                    teamName,
+                    memberFirstName,
+                    memberLastName,
+                    memberFullName,
+                    memberUsername,
+                    managerFirstName,
+                    managerLastName,
+                    managerFullName,
+                    managerUsername,
+                    created,
+                    updated
+                from vw_team_members
+                where teamId=?
+                `,
+                [teamId],
+                (error, results, _fields) => {
+                    if (error) reject(error)
+                    if (results) resolve(results)
+                }
+            )
+        })
+    }
 }
 
 export default TeamMembers;

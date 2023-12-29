@@ -39,7 +39,7 @@ class Tasks {
             this
             .pool
             .query(
-                'select * from vw_tasks where assignee_username = ?',
+                'select * from vw_tasks where assigneeUsername = ?',
                 [username],
                 (errorAssignee, resultsAssignee, _fieldsAssignee) => {
                     if (resultsAssignee) {
@@ -47,7 +47,7 @@ class Tasks {
                         this
                         .pool
                         .query(
-                            'select * from vw_tasks where reporter_username = ?',
+                            'select * from vw_tasks where reporterUsername = ?',
                             [username],
                             (errorReporter, resultsReporter, _fieldsReporter) => {
                                 if (resultsReporter) {

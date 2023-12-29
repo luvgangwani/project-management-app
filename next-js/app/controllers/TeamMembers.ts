@@ -1,4 +1,4 @@
-import { OkPacketParams } from "mysql2";
+import { OkPacketParams, RowDataPacket } from "mysql2";
 import ProjectManagementAppAPIError from "../errors/ProjectManagementAppAPIError"
 import TeamMembersService from "../services/TeamMembers"
 import { getToken } from "next-auth/jwt";
@@ -41,6 +41,34 @@ class TeamMembers {
         } else {
             return {
                 message: `Sorry we cannot add "${memberUsername}" to the team currently. Please try again in some time.`
+            }
+        }
+    }
+
+    async getMembersInATeam(teamId: number) {
+        let data;
+
+        if (teamId <= 0) {
+            throw new ProjectManagementAppAPIError('Please provide a team id', 400)
+        }
+
+        try {
+            data = await this
+                        .service
+                        .getMembersInATeam(teamId)
+        } catch (error) {
+            throw new ProjectManagementAppAPIError(`Unexpected error encountered while fetching members in the team. Please try again. Details: ${error}`)
+        }
+
+        const response = data as RowDataPacket
+
+        if (response.length > 0) {
+            return {
+                teamMembers: response
+            }
+        } else {
+            return {
+                message: 'There are no members in this team currently.'
             }
         }
     }

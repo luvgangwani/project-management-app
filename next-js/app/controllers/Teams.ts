@@ -12,7 +12,7 @@ class Teams {
     async create(team: ITeams) {
         let data;
         if (!team.name)
-            throw new ProjectManagementAppAPIError('Please provide a team name', 401)
+            throw new ProjectManagementAppAPIError('Please provide a team name', 400)
         try {
             data = await this
             .service
@@ -35,7 +35,7 @@ class Teams {
     async getTeamsByUsername(username: string) {
         let data;
         if (!username)
-            throw new ProjectManagementAppAPIError('Please provide a username.')
+            throw new ProjectManagementAppAPIError('Please provide a username.', 400)
         try {
             data = await this
                     .service
