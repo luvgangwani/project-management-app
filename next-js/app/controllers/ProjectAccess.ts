@@ -22,7 +22,7 @@ class ProjectAccess {
         }
 
         if (!projectAccess.adminUsername) {
-            throw new ProjectManagementAppAPIError('Please provide a valid manager. The session token might be invalid. Please try logging in again.')
+            throw new ProjectManagementAppAPIError('Please provide a valid manager. The session token might be invalid. Please try logging in again.', 400)
         }
 
         try {

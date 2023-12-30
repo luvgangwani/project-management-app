@@ -31,7 +31,7 @@ export interface IAuth {
 export interface IProjects {
     id?: number,
     name: string,
-    managerUsername: string,
+    managerUsername?: string | null,
     created?: string,
     update?: string,
 }

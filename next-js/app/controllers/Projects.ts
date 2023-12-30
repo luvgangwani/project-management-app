@@ -17,6 +17,10 @@ class Projects {
       );
     }
 
+    if (!project.managerUsername) {
+      throw new ProjectManagementAppAPIError('Please provide a valid manager. The session token might be invalid. Please try logging in again.', 400)
+    }
+
     let data;
 
     try {
