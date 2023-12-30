@@ -8,6 +8,9 @@ export const config = {
         '/api/projects',
         '/api/projects/:username*',
         '/api/tasks',
-        '/api/tasks/:username*'
+        '/api/tasks/:username*',
+        '/api/teammembers',
+        '/api/teammembers/team/:teamId*',
+        '/api/projectaccess'
     ]
 }
