@@ -45,7 +45,7 @@ export interface ITasks {
     typeId: number,
     projectId: number,
     assigneeUsername: string,
-    reporterUsername: string,
+    reporterUsername?: string | null,
     created?: string,
     updated?: string,
 }

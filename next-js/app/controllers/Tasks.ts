@@ -15,6 +15,9 @@ class Tasks {
 
         if (!task.name)
             throw new ProjectManagementAppAPIError('Please provide a task name.', 400)
+        
+        if (!task.reporterUsername)
+            throw new ProjectManagementAppAPIError('Please provide a reporter. The session token might be invalid. Please try logging in again.', 400)
 
         if (!task.assigneeUsername)
             throw new ProjectManagementAppAPIError('Please select a task assignee.', 400)
