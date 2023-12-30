@@ -57,3 +57,11 @@ export interface ITeamMembers {
     created?: string,
     updated?: string,
 }
+
+export interface IProjectAccess {
+    projectId: number,
+    teamId: number,
+    adminUsername?: string | null,
+    created?: string,
+    updated?: string
+}
