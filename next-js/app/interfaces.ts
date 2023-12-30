@@ -14,7 +14,7 @@ export interface ITeams {
     id?: number,
     name: string,
     description: string,
-    managerUsername: string,
+    managerUsername?: string | null,
     created?: string,
     updated?: string,
 }

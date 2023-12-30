@@ -1,6 +1,7 @@
 import Teams from "@/app/controllers/Teams";
 import ProjectManagementAppAPIError from "@/app/errors/ProjectManagementAppAPIError";
 import { ITeams } from "@/app/interfaces";
+import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const teamsController = new Teams()
@@ -8,6 +9,10 @@ const teamsController = new Teams()
 export async function POST(req: NextRequest) {
     try {
         const team = await req.json() as ITeams
+
+        const token = await getToken({ req })
+
+        team.managerUsername = token?.email
     
         const response = await teamsController
                     .create(team)

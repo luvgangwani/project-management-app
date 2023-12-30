@@ -13,6 +13,10 @@ class Teams {
         let data;
         if (!team.name)
             throw new ProjectManagementAppAPIError('Please provide a team name', 400)
+
+        if (!team.managerUsername)
+            throw new ProjectManagementAppAPIError('Please provide a valid manager. The session token might be invalid. Please try logging in again.')
+        
         try {
             data = await this
             .service
