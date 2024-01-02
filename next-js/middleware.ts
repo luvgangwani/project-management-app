@@ -3,6 +3,7 @@ export { default } from 'next-auth/middleware'
 
 export const config = {
     matcher: [
+        // api
         '/api/teams',
         '/api/teams/:username*',
         '/api/projects',
@@ -11,6 +12,8 @@ export const config = {
         '/api/tasks/:username*',
         '/api/teammembers',
         '/api/teammembers/team/:teamId*',
-        '/api/projectaccess'
+        '/api/projectaccess',
+        // pages
+        '/',
     ]
 }
