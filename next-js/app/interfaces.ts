@@ -10,6 +10,18 @@ export interface IUsers {
     updated?: string,
 }
 
+export interface IUsersView {
+       id: number,
+       first_name: string,
+       last_name: string,
+       username: string,
+       password?: string,
+       profession: string,
+       role: string,
+       created?: string,
+       updated?: string
+}
+
 export interface ITeams {
     id?: number,
     name: string,

@@ -1,5 +1,5 @@
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
-import { ICreds, IUsers } from '../interfaces';
+import { ICreds, IUsers, IUsersView } from '../interfaces';
 import UsersService from '../services/Users'
 import { OkPacketParams, RowDataPacket } from 'mysql2';
 import ProjectManagementAppAPIError from '../errors/ProjectManagementAppAPIError';
@@ -94,15 +94,12 @@ class Users {
 
         const userResponse = data as RowDataPacket
             if (userResponse.length === 1) {
-                const fetchedUser = userResponse[0] as IUsers
+                const fetchedUser = userResponse[0] as IUsersView
                 const comparisonResult = compareSync(creds.password, fetchedUser.password!)
                 if (comparisonResult) {
                     // delete the password and tokenize the fetched user info
                     fetchedUser.password = undefined
-                    return {
-                        id: fetchedUser.id,
-                        email: fetchedUser.username
-                    }
+                    return fetchedUser
                 } else {
                     throw new ProjectManagementAppAPIError('Password does not match.', 403)
                 }

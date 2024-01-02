@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     task.reporterUsername = token?.email
     
-    const response = await tasksController.create(task);
+    const response = {} // await tasksController.create(task);
 
     return NextResponse.json(
       {

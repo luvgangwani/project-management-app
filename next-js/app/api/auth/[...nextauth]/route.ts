@@ -1,9 +1,12 @@
 import Users from "@/app/controllers/Users";
+import { IUsers, IUsersView } from "@/app/interfaces";
 import { User } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const usersController = new Users()
+
+let authUser: IUsersView;
 
 const handler = NextAuth({
     session: {
@@ -25,12 +28,21 @@ const handler = NextAuth({
                 }
             },
             async authorize(credentials, req) {
-                const auth = await usersController.login(credentials)
-                if (auth) return auth as unknown as Promise<User>
+                authUser = await usersController.login(credentials) as IUsersView
+                if (authUser) return {
+                    id: authUser.id,
+                    email: authUser.username
+                } as unknown as Promise<User>
                 return null
             },
         })
-    ]
+    ],
+    callbacks: {
+        async jwt({ token }) {
+            token.role = authUser.role
+            return token
+        },
+    }
 })
 
 export { handler as GET, handler as POST }
