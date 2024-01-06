@@ -1,4 +1,18 @@
+body {
+    border: 2px solid
+}
 .app-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    border: 2px solid blue
+}
+
+.app-header span {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.app-header nav {
+    font-size: 0.9em;
 }

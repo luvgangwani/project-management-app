@@ -20,7 +20,9 @@ export default function RootLayout({
       <body className={montserrat.className}>
         <header className='app-header'>
           <span>Project Management App</span>
-          <Link href="/api/auth/signout">Logout</Link>
+          <nav>
+            <Link href="/api/auth/signout">Logout</Link>
+          </nav>
         </header>
         {children}
       </body>
