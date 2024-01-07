@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
-import Link from 'next/link'
+import Header from './header'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -18,13 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <header className='app-header'>
-          <span>Project Management App</span>
-          <nav>
-            <Link href="/api/auth/signout">Logout</Link>
-          </nav>
-        </header>
-        {children}
+          <Header />
+          {children}
       </body>
     </html>
   )

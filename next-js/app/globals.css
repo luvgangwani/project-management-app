@@ -1,18 +1,29 @@
 body {
-    border: 2px solid
+    border: 2px solid;
+    background-color: #292929;
 }
 .app-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid blue
+    border: 2px solid blue;
 }
 
 .app-header span {
     font-weight: bold;
     font-size: 1.3em;
+    color: #dedede;
 }
 
 .app-header nav {
     font-size: 0.9em;
+    display: flex;
+    column-gap: 2em;
+}
+
+.app-header nav a {
+    border: 2px solid greenyellow;
+    color: #dedede;
+    text-decoration: none;
+    cursor: pointer;
 }
