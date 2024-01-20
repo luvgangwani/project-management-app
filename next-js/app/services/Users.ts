@@ -38,6 +38,7 @@ class Users {
                     id,
                     firstName,
                     lastName,
+                    fullName,
                     username,
                     password,
                     profession,
