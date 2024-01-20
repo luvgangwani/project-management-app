@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    border: 2px solid maroon
+}
+
+.header span {
+    font-size: 1.8em;
+    font-weight: bold
+}
+
+.header a {
+    color: #529e51;
+    text-decoration: none;
+}

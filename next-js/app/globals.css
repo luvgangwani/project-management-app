@@ -1,18 +1,20 @@
 body {
     border: 2px solid;
     background-color: #292929;
+    color: #dedede;
+    padding: 1em 2em;
 }
 .app-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 2px solid blue;
+    margin-bottom: 2em;
 }
 
 .app-header span {
     font-weight: bold;
     font-size: 1.3em;
-    color: #dedede;
 }
 
 .app-header nav {
@@ -23,7 +25,11 @@ body {
 
 .app-header nav a {
     border: 2px solid greenyellow;
-    color: #dedede;
     text-decoration: none;
     cursor: pointer;
+    color: #dedede
+}
+
+.container {
+    border: 2px solid palevioletred;
 }
