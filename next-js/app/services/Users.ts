@@ -36,8 +36,8 @@ class Users {
             .query(
                 `select
                     id,
-                    first_name,
-                    last_name,
+                    firstName,
+                    lastName,
                     username,
                     password,
                     profession,

@@ -1,8 +1,12 @@
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import authOptions from "./api/auth/[...nextauth]/auth-options";
 
-function Header() {
+async function Header() {
+  const session = await getServerSession(authOptions);
 
-    return (
+
+  return (
     <header className="app-header">
       <span>Project Management App</span>
       <nav>
