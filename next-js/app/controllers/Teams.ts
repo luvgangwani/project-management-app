@@ -55,6 +55,31 @@ class Teams {
             }
         } else {
             return {
+                message: 'You are not assigned to any teams.'
+            }
+        }
+
+    }
+
+    async getTeamsCreatedByUsername(username: string | null | undefined) {
+        let data;
+        if (!username)
+            throw new ProjectManagementAppAPIError('Please provide a username.', 400)
+        try {
+            data = await this
+                    .service
+                    .getTeamsCreatedByUsername(username)
+        } catch (error) {
+            throw new ProjectManagementAppAPIError(`Error fetching teams' information for "${username}": ${error}`)
+        }
+
+        const response = data as RowDataPacket
+        if (response.length > 0) {
+            return {
+                teams: response
+            }
+        } else {
+            return {
                 message: 'You have not created any teams.'
             }
         }

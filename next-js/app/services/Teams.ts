@@ -33,6 +33,30 @@ class Teams {
             .pool
             .query(
                 `select
+                teamid,
+                teamName,
+                teamDescription,
+                managerFullName,
+                managerUsername,
+                created,
+                updated
+                from vw_team_members
+                where memberUsername = ?`,
+                [username],
+                (errors, results, _fields) => {
+                    if (errors) reject(errors)
+                    if (results) resolve(results)
+                }
+            )
+        })
+    }
+
+    getTeamsCreatedByUsername(username: string) {
+        return new Promise((resolve, reject) => {
+            this
+            .pool
+            .query(
+                `select
                 id,
                 name,
                 description,

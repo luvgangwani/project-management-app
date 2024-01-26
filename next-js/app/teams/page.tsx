@@ -29,9 +29,10 @@ function renderCreatedTeams() {
       <div className={styles.teams}>
         {response.teams.map((team: ITeamsView, index: number) => (
           <div key={index} className={styles.team}>
-            <div className={styles.teamNameAndDescription}></div>
-            <div className={styles.name}>{team.name}</div>
-            <div className={styles.description}>{team.description}</div>
+            <div className={styles.teamNameAndDescription}>
+              <div className={styles.name}>{team.name}</div>
+              <div className={styles.description}>{team.description}</div>
+            </div>
             <Link href={`/user/${team.managerUsername}`} className={styles.manager}>
               {team.managerFullName}
             </Link>
@@ -46,7 +47,7 @@ async function Teams() {
   const authUser = await getAuthUser();
 
   try {
-    response = await teamsController.getTeamsByUsername(authUser?.username);
+    response = await teamsController.getTeamsCreatedByUsername(authUser?.username);
   } catch (error) {
     err = (error as ProjectManagementAppAPIError).message;
   }
