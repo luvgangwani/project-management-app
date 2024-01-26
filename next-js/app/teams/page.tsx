@@ -105,13 +105,13 @@ async function Teams() {
           <div className={styles.created}>
             <div className={styles.createdHeader}>Teams you've created</div>
             {renderCreatedTeams()}
-            <Link href="#">Add</Link>
+            <Link href="/teams/add">Add</Link>
           </div>
         ) : (
           <></>
         )}
 
-        <div className={styles.created}>
+        <div className={styles.assigned}>
           <div className={styles.createdHeader}>Teams you're a part of</div>
           {renderTeamsYouAreAPartOf()}
         </div>
