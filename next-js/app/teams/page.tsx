@@ -5,37 +5,74 @@ import { Role } from "../enums";
 import TeamsController from "@/app/controllers/Teams";
 import ProjectManagementAppAPIError from "../errors/ProjectManagementAppAPIError";
 import { RowDataPacket } from "mysql2";
-import { ITeamsView } from "../interfaces";
+import { ITeamMembersView, ITeamsView } from "../interfaces";
 
 const teamsController = new TeamsController();
 
-let response:
+let responseCreatedTeams:
   | { teams: RowDataPacket; message?: undefined }
   | {
       message: string;
       teams?: undefined;
     };
-let err: string;
+let responseTeamsYouAreAPartOf:
+| { teams: RowDataPacket; message?: undefined }
+| {
+    message: string;
+    teams?: undefined;
+  };
+let errCreatedTeams: string;
+let errTeamsYouAreAPartOf: string;
 
 function renderCreatedTeams() {
-  if (err) {
-    return <div>{err}</div>;
+  if (errCreatedTeams) {
+    return <div>{errCreatedTeams}</div>;
   }
-  if (response.message) {
-    <div>{response.message}</div>;
+  if (responseCreatedTeams.message) {
+    return <div>{responseCreatedTeams.message}</div>;
   }
-  if (response.teams) {
+  if (responseCreatedTeams.teams) {
     return (
       <div className={styles.teams}>
-        {response.teams.map((team: ITeamsView, index: number) => (
+        {responseCreatedTeams.teams.map((team: ITeamsView, index: number) => (
           <div key={index} className={styles.team}>
             <div className={styles.teamNameAndDescription}>
               <div className={styles.name}>{team.name}</div>
               <div className={styles.description}>{team.description}</div>
             </div>
-            <Link href={`/user/${team.managerUsername}`} className={styles.manager}>
-              {team.managerFullName}
-            </Link>
+            <div className={styles.manager}>
+              Created by: <Link href={`/user/${team.managerUsername}`}>
+                {team.managerFullName}
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+function renderTeamsYouAreAPartOf() {
+  if (errTeamsYouAreAPartOf) {
+    return <div>{errTeamsYouAreAPartOf}</div>;
+  }
+  if (responseTeamsYouAreAPartOf.message) {
+    return <div>{responseTeamsYouAreAPartOf.message}</div>;
+  }
+  if (responseTeamsYouAreAPartOf.teams) {
+    return (
+      <div className={styles.teams}>
+        {responseTeamsYouAreAPartOf.teams.map((team: ITeamMembersView, index: number) => (
+          <div key={index} className={styles.team}>
+            <div className={styles.teamNameAndDescription}>
+              <div className={styles.name}>{team.teamName}</div>
+              <div className={styles.description}>{team.teamDescription}</div>
+            </div>
+            <div className={styles.manager}>
+              Created by: <Link href={`/user/${team.managerUsername}`}>
+                {team.managerFullName}
+              </Link>
+            </div>
           </div>
         ))}
       </div>
@@ -47,9 +84,15 @@ async function Teams() {
   const authUser = await getAuthUser();
 
   try {
-    response = await teamsController.getTeamsCreatedByUsername(authUser?.username);
+    responseCreatedTeams = await teamsController.getTeamsCreatedByUsername(authUser?.username);
   } catch (error) {
-    err = (error as ProjectManagementAppAPIError).message;
+    errCreatedTeams = (error as ProjectManagementAppAPIError).message;
+  }
+
+  try {
+    responseTeamsYouAreAPartOf = await teamsController.getTeamsByUsername(authUser?.username);
+  } catch (error) {
+    errTeamsYouAreAPartOf = (error as ProjectManagementAppAPIError).message;
   }
 
   return (
@@ -67,6 +110,11 @@ async function Teams() {
         ) : (
           <></>
         )}
+
+        <div className={styles.created}>
+          <div className={styles.createdHeader}>Teams you're a part of</div>
+          {renderTeamsYouAreAPartOf()}
+        </div>
       </div>
     </>
   );

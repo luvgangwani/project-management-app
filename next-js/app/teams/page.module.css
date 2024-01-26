@@ -8,11 +8,13 @@
 
 .header span {
     font-size: 1.8em;
-    font-weight: bold
+    font-weight: bold;
 }
 
 .container {
     display: flex;
+    flex-direction: column;
+    row-gap: 2em;
 }
 
 .created {
@@ -40,9 +42,15 @@
     border: 2px solid forestgreen;
 }
 
-.teams a {
+.manager {
     color: #dedede;
     font-size: 0.8em;
+    font-style: italic;
+}
+
+.manager a {
+    color: #dedede;
+    text-decoration: underline;
 }
 
 .team {
@@ -61,5 +69,4 @@
 
 .description {
     font-size: 0.8em;
-    font-style: italic;
 }

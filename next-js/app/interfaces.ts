@@ -45,6 +45,23 @@ export interface ITeamsView {
     updated?: string,
 }
 
+export interface ITeamMembersView {
+    id?: number,
+    teamName: string,
+    teamDescription: string,
+    memberFirstName: string,
+    memberLastName: string,
+    memberFullName: string,
+    memberUsername: string,
+    managerFirstName: string,
+    managerLastName: string,
+    managerFullName: string,
+    managerUsername?: string | null,
+    userRole: string,
+    created?: string,
+    updated?: string,
+}
+
 export interface ICreds {
     username: string,
     password: string
