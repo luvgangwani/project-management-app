@@ -28,3 +28,20 @@ export async function POST(req: NextRequest) {
         }, { status: statusCode })
     }
 }
+
+export async function GET(req: NextRequest) {
+    const token = await getToken({ req })
+    try {
+        const response = await teamsController.getTeamsByUsername(token?.email)
+        return NextResponse.json({
+            success: true,
+            ... response
+        }, { status: 200 })
+    } catch (error) {
+        const { message, statusCode } = error as ProjectManagementAppAPIError
+        return NextResponse.json({
+            succes: false,
+            error: message
+        }, { status: statusCode })
+    }
+}

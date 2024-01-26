@@ -36,7 +36,7 @@ class Teams {
         }
     }
 
-    async getTeamsByUsername(username: string) {
+    async getTeamsByUsername(username: string | null | undefined) {
         let data;
         if (!username)
             throw new ProjectManagementAppAPIError('Please provide a username.', 400)

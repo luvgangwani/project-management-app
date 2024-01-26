@@ -36,11 +36,12 @@ class Teams {
                 id,
                 name,
                 description,
-                manager_username,
+                managerFullName,
+                managerUsername,
                 created,
                 updated
                 from vw_teams
-                where manager_username = ?`,
+                where managerUsername = ?`,
                 [username],
                 (errors, results, _fields) => {
                     if (errors) reject(errors)
