@@ -8,8 +8,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid blue;
     margin-bottom: 2em;
+    padding-bottom: 1.2em;
+    border-bottom: 2px solid #7c7c7c;
 }
 
 .app-header span {
@@ -24,12 +25,7 @@ body {
 }
 
 .app-header nav a {
-    border: 2px solid greenyellow;
     text-decoration: none;
     cursor: pointer;
     color: #dedede
-}
-
-.container {
-    border: 2px solid palevioletred;
 }
