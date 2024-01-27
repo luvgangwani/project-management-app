@@ -39,3 +39,39 @@ body {
     font-weight: bold;
     text-decoration: underline;
 }
+
+form {
+    display: grid;
+    grid-template-columns: 20% 40%;
+    row-gap: 2em;
+}
+
+input[type="text"],
+textarea {
+    background-color: transparent;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    color: #dedede;
+    min-height: 35px;
+    padding: 0 5px;
+}
+
+textarea {
+    padding: 5px;
+    font-family: inherit;
+}
+
+button {
+    background-color: transparent;
+    min-height: 30px;
+    border: 1px solid #dedede;
+    color: #dedede;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #dedede;
+    color: #292929;
+}

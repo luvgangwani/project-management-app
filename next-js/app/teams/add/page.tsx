@@ -7,7 +7,7 @@ function TeamAddForm() {
     <div className={styles.container}>
         <div className={styles.header}>Add a new team</div>
         <form>
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">Name: </label>
             <input type="text" name="name" id="name" />
             <label htmlFor="description">Description:</label>
             <textarea name="description" id="description"></textarea>
