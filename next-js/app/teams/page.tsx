@@ -38,7 +38,7 @@ function renderCreatedTeams() {
           <div key={index} className={styles.team}>
             <div className={styles.teamNameAndDescription}>
               <div className={styles.name}>{team.name}</div>
-              <div className={styles.description}>{team.description}</div>
+              <div className={styles.description}>{team.description ? team.description : 'No description'}</div>
             </div>
             <div className={styles.manager}>
               Created by: <Link href={`/user/${team.managerUsername}`}>
@@ -66,7 +66,7 @@ function renderTeamsYouAreAPartOf() {
           <div key={index} className={styles.team}>
             <div className={styles.teamNameAndDescription}>
               <div className={styles.name}>{team.teamName}</div>
-              <div className={styles.description}>{team.teamDescription}</div>
+              <div className={styles.description}>{team.teamDescription ? team.teamDescription : 'No description'}</div>
             </div>
             <div className={styles.manager}>
               Created by: <Link href={`/user/${team.managerUsername}`}>
