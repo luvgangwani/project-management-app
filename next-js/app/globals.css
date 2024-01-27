@@ -29,3 +29,13 @@ body {
     cursor: pointer;
     color: #dedede
 }
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-decoration: underline;
+}

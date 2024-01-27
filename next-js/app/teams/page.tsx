@@ -97,9 +97,7 @@ async function Teams() {
 
   return (
     <>
-      <div className={styles.header}>
-        <span>Teams</span>
-      </div>
+      <div className="page-header">Teams</div>
       <div className={styles.container}>
         {authUser?.role === Role.ADMIN || authUser?.role === Role.MANAGER ? (
           <div className={styles.created}>

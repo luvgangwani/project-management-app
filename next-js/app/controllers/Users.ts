@@ -76,7 +76,7 @@ class Users {
             return response.length === 1 // since there's a unique key constraint on the DB field
     }
 
-    async getUserByUsername(username: string) {
+    async getUserByUsername(username: string | undefined) {
         let data
         
         if (!username)
