@@ -9,9 +9,10 @@ const usersController = new Users
 export async function GET(req: NextRequest, { params }: UsernameRouteParam) {
     const { username } = params
     try {
-        const success = await usersController.doesUsernameExist(username)
+        const response = await usersController.getUserByUsername(username)
         return NextResponse.json({
-            success,
+            success: true,
+            user: response
         }, { status: 200 })
     } catch (error) {
         const { message, statusCode } = error as ProjectManagementAppAPIError

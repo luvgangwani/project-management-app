@@ -76,6 +76,28 @@ class Users {
             return response.length === 1 // since there's a unique key constraint on the DB field
     }
 
+    async getUserByUsername(username: string) {
+        let data
+        
+        if (!username)
+            throw new ProjectManagementAppAPIError('Please provide a username.', 401)
+
+        try {
+            data = await this
+                .service
+                .getUserByUsername(username);
+            } catch (error) {
+                throw new ProjectManagementAppAPIError(`Error fetching user: ${error}`);
+            }
+            const response = data as RowDataPacket;
+            if (response.length <= 0) {
+                throw new ProjectManagementAppAPIError(`Sorry, we couldn't find a user with username "${username}".`, 404);
+            }
+            const user = response?.[0] as IUsersView 
+            user.password = undefined
+            return user;
+    }
+
     async login(creds: Record<"password" | "username", string> | undefined) {
         let data
         // check password is provided

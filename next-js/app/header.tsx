@@ -13,7 +13,6 @@ async function Header() {
         <Link href="/teams">Teams</Link>
         <Link href="/projects">Projects</Link>
         <Link href="/tasks">Tasks</Link>
-        <Link href="/api/auth/signout">Logout</Link>
         <Link href={"/profile"}>{ authUser?.fullName }</Link>
       </nav>
     </header>
