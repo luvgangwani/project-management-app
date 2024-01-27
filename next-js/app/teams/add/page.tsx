@@ -1,14 +1,9 @@
-import { Role } from "@/app/enums"
-import { getAuthUser } from "@/app/util"
+import withAuthorize from '@/app/hoc/withAuthorize'
 import styles from './page.module.css'
 
-async function TeamAddForm() {
-    const authUser = await getAuthUser()
+
+function TeamAddForm() {
   return (
-    (authUser?.role !== Role.ADMIN && authUser?.role !== Role.MANAGER)
-    ?
-    <div>You're not authorised to view this page.</div>
-    :
     <div className={styles.container}>
         <div className={styles.header}>Add a new team</div>
         <form>
@@ -22,4 +17,4 @@ async function TeamAddForm() {
   )
 }
 
-export default TeamAddForm
+export default withAuthorize(TeamAddForm)
