@@ -1,7 +1,7 @@
 "use client";
 
 import styles from './page.module.css'
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import { createTeam } from '@/actions';
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
 }
 function TeamAddForm() {
   const [state, formAction] = useFormState(createTeam, initialState)
+  const { pending } = useFormStatus()
   return (
     <div className={styles.container}>
         <div className={styles.header}>Add a new team</div>
@@ -17,7 +18,7 @@ function TeamAddForm() {
             <input type="text" name="name" id="name" />
             <label htmlFor="description">Description:</label>
             <textarea name="description" id="description"></textarea>
-            <button type="submit" id="btnCreate">Create</button>
+            <button type="submit" id="btnCreate">{ pending ? 'Creating...' : 'Create'}</button>
         </form>
         <div className={styles.message}>{state.message}</div>
     </div>
