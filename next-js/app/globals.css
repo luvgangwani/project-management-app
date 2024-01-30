@@ -75,3 +75,16 @@ button:hover {
     background-color: #dedede;
     color: #292929;
 }
+
+.message {
+    margin-top: 2em;
+    font-size: 0.8em;
+}
+
+.error {
+    color: #ff6565
+}
+
+.success {
+    color: #2e8c2e
+}

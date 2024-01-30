@@ -9,7 +9,8 @@ import { getSession } from 'next-auth/react';
 import { Role } from '@/app/enums';
 
 const initialState = {
-  message: ''
+  message: '',
+  showError: false,
 }
 function TeamAddForm() {
   const [state, formAction] = useFormState(createTeam, initialState)
@@ -36,11 +37,11 @@ function TeamAddForm() {
             <textarea name="description" id="description"></textarea>
             <button type="submit" id="btnCreate">{ pending ? 'Creating...' : 'Create'}</button>
         </form>
-        <div className={styles.message}>{state.message}</div>
+        <div className={`message ${state.showError ? 'error' : 'success'}`}>{state.message}</div>
     </div>
     :
     <div>You do not have access to this page.</div>
   )
 }
 
-export default TeamAddForm // adding withAuthorize causes unexpected failures. Try setting this from the controller instead
+export default TeamAddForm

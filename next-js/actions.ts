@@ -5,7 +5,7 @@ import ProjectManagementAppAPIError from "./app/errors/ProjectManagementAppAPIEr
 import { ITeams } from "./app/interfaces";
 import { getAuthUser } from "./app/util";
 
-export async function createTeam(prev: { message: string }, formData: FormData) {
+export async function createTeam(prev: { message: string, showError: boolean }, formData: FormData) {
     const teamsController = new TeamsController();
 
     const authUser = await getAuthUser();
@@ -17,11 +17,15 @@ export async function createTeam(prev: { message: string }, formData: FormData) 
     };
     try {
         const response = await teamsController.create(team)
-        return response
+        return {
+            ...response,
+            showError: false,
+        }
     } catch (error) {
         const { message } = error as ProjectManagementAppAPIError
         return {
             message,
+            showError: true
         }
     }
 }
