@@ -41,7 +41,7 @@ function renderCreatedTeams() {
               <div className={styles.description}>{team.description ? team.description : 'No description'}</div>
             </div>
             <div className={styles.manager}>
-              Created by: <Link href={`/user/${team.managerUsername}`}>
+              Created by: <Link href={`/profile/${team.managerUsername}`}>
                 {team.managerFullName}
               </Link>
             </div>
@@ -69,7 +69,7 @@ function renderTeamsYouAreAPartOf() {
               <div className={styles.description}>{team.teamDescription ? team.teamDescription : 'No description'}</div>
             </div>
             <div className={styles.manager}>
-              Created by: <Link href={`/user/${team.managerUsername}`}>
+              Created by: <Link href={`/profile/${team.managerUsername}`}>
                 {team.managerFullName}
               </Link>
             </div>

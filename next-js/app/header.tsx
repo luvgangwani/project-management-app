@@ -13,7 +13,7 @@ async function Header() {
         <Link href="/teams">Teams</Link>
         <Link href="/projects">Projects</Link>
         <Link href="/tasks">Tasks</Link>
-        <Link href={"/profile"}>{ authUser?.fullName }</Link>
+        <Link href={`/profile/${authUser?.username}`}>{ authUser?.fullName }</Link>
       </nav>
     </header>
   );

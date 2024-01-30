@@ -1,9 +1,10 @@
 import Link from "next/link";
-import UsersController from "../controllers/Users";
-import ProjectManagementAppAPIError from "../errors/ProjectManagementAppAPIError";
-import { IUsersView } from "../interfaces";
-import { getAuthUser } from "../util";
+import UsersController from "../../controllers/Users";
+import ProjectManagementAppAPIError from "../../errors/ProjectManagementAppAPIError";
+import { IUsersView } from "../../interfaces";
+import { getAuthUser } from "../../util";
 import styles from './page.module.css';
+import { UsernameRouteParam } from "@/app/api/types";
 
 
 const usersController = new UsersController()
@@ -11,13 +12,13 @@ const usersController = new UsersController()
 let user: IUsersView;
 let err: string;
 
-async function Profile() {
+async function Profile({ params }: UsernameRouteParam) {
 
   const authUser = await getAuthUser()
 
   // get user info using username
   try {
-    user = await usersController.getUserByUsername(authUser?.username)
+    user = await usersController.getUserByUsername(params.username)
   } catch (error) {
     err = (error as ProjectManagementAppAPIError).message
   }
@@ -26,7 +27,7 @@ async function Profile() {
     <div className={styles.container}>
       <div className='page-header'>
         Profile
-        <Link href={'/api/auth/signout'} className={styles.logout}>Logout</Link>
+        {(params.username === authUser?.username) ? <Link href={'/api/auth/signout'} className={styles.logout}>Logout</Link> : <></>}
       </div>
       {
         (err)
