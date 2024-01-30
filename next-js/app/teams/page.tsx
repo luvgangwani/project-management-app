@@ -26,10 +26,10 @@ let errTeamsYouAreAPartOf: string;
 
 function renderCreatedTeams() {
   if (errCreatedTeams) {
-    return <div>{errCreatedTeams}</div>;
+    return <div className="message error">{errCreatedTeams}</div>;
   }
   if (responseCreatedTeams.message) {
-    return <div>{responseCreatedTeams.message}</div>;
+    return <div className="message">{responseCreatedTeams.message}</div>;
   }
   if (responseCreatedTeams.teams) {
     return (
@@ -54,10 +54,10 @@ function renderCreatedTeams() {
 
 function renderTeamsYouAreAPartOf() {
   if (errTeamsYouAreAPartOf) {
-    return <div>{errTeamsYouAreAPartOf}</div>;
+    return <div className="message error">{errTeamsYouAreAPartOf}</div>;
   }
   if (responseTeamsYouAreAPartOf.message) {
-    return <div>{responseTeamsYouAreAPartOf.message}</div>;
+    return <div className="message">{responseTeamsYouAreAPartOf.message}</div>;
   }
   if (responseTeamsYouAreAPartOf.teams) {
     return (
@@ -103,7 +103,7 @@ async function Teams() {
           <div className={styles.created}>
             <div className={styles.createdHeader}>Teams you've created</div>
             {renderCreatedTeams()}
-            <Link href="/teams/add">Add</Link>
+            <Link href="/teams/add" className={styles.add}>Add</Link>
           </div>
         ) : (
           <></>

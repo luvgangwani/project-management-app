@@ -20,14 +20,13 @@
 .createdHeader {
     font-size: 1.6em;
     font-weight: bold;
-    margin-bottom: 1em;
 }
 
 .teams {
     display: flex;
     flex-direction: column;
     row-gap: 1.8em;
-    margin-bottom: 1.5em;
+    margin: 1.5em 0;
 }
 
 .manager {
@@ -56,4 +55,8 @@
 
 .description {
     font-size: 0.8em;
+}
+
+.add {
+    margin-top: 1em
 }
