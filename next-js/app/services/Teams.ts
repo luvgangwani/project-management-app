@@ -74,6 +74,31 @@ class Teams {
             )
         })
     }
+
+    getTeamById(id: number) {
+        return new Promise((resolve, reject) => {
+            this
+            .pool
+            .query(
+                `
+                    select
+                    name,
+                    description,
+                    managerFullName,
+                    managerUsername,
+                    created,
+                    updated
+                    from vw_teams
+                    where id = ?
+                `,
+                [id],
+                (error, result, _fields) => {
+                    if (error) reject(error)
+                    if (result) resolve(result)
+                }
+            )
+        })
+    }
 }
 
 export default Teams;

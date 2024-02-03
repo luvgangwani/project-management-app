@@ -85,6 +85,31 @@ class Teams {
         }
 
     }
+
+    async getTeamById(id?: number) {
+        let data;
+        if (!id) throw new ProjectManagementAppAPIError('Please provide a valid team id.', 400)
+
+        try {
+            data = await this
+                        .service
+                        .getTeamById(id)
+        } catch (error) {
+            throw new ProjectManagementAppAPIError(`Error fetching team information. Details: ${error}`)
+        }
+
+        const response = data as RowDataPacket
+
+        if (response.length > 0) {
+            return {
+                team: response[0]
+            }
+        } else {
+            return {
+                message: 'Team does not exist.'
+            }
+        }
+    }
 }
 
 export default Teams;

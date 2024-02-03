@@ -57,7 +57,6 @@ export interface ITeamMembersView {
     managerLastName: string,
     managerFullName: string,
     managerUsername?: string | null,
-    userRole: string,
     created?: string,
     updated?: string,
 }
