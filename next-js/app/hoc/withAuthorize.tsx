@@ -6,7 +6,7 @@ function withAuthorize(Component: React.FC) {
   return async function() {
     const authUser = await getAuthUser()
     if (authUser?.role !== Role.ADMIN && authUser?.role !== Role.MANAGER) {
-      return <div>You're not authorised to view this page.</div>
+      return <div className="message">You're not authorised to view this page.</div>
     } else {
       return <Component />
     }
