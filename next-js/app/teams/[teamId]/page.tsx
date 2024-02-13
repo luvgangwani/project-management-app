@@ -4,6 +4,8 @@ import TeamsController from '@/app/controllers/Teams';
 import ProjectManagementAppAPIError from '@/app/errors/ProjectManagementAppAPIError';
 import { ITeamMembersView, ITeamsView } from '@/app/interfaces';
 import { RowDataPacket } from 'mysql2';
+import styles from './page.module.css'
+import Link from 'next/link';
 
 const teamsController = new TeamsController();
 const teamMembersController = new TeamMembersController();
@@ -62,13 +64,18 @@ function renderTeamInfo() {
     team = responseTeam.team as ITeamsView
 
     return (
-      <div>
-        <div>{team.name}</div>
-        <div>{team.description}</div>
-        <div>{team.managerFullName}</div>
-        <div>{team.created?.toString()}</div>
-        <div>{team.updated?.toString()}</div>
-        <hr/>
+      <div className={styles.container}>
+        <div className={styles.header}>{team.name}</div>
+        <div className={styles.description}>{team.description ? team.description : 'No description'}</div>
+        <div className={styles.manager}>Created by:<Link href={`/profile/${team.managerUsername}`}>{team.managerFullName}</Link></div>
+        <div className={styles.created}>
+          <span>Created:</span>
+          <span>{team.created?.toString()}</span>
+        </div>
+        <div className={styles.updated}>
+          <span>Updated:</span>
+          <span>{team.updated?.toString()}</span>
+        </div>
         <div>Team Members</div>
         { renderTeamMemberInfo() }
         {/* TODO: ADD a team member to a team */}
