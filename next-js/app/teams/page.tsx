@@ -37,7 +37,7 @@ function renderCreatedTeams() {
         {responseCreatedTeams.teams.map((team: ITeamsView, index: number) => (
           <div key={index} className={styles.team}>
             <div className={styles.teamNameAndDescription}>
-              <div className={styles.name}>{team.name}</div>
+              <Link href={`/teams/${team.id}`} className={styles.name}>{team.name}</Link>
               <div className={styles.description}>{team.description ? team.description : 'No description'}</div>
             </div>
             <div className={styles.manager}>

@@ -53,6 +53,11 @@
     row-gap: 0.7em;
 }
 
+a.name {
+    color: #dedede;
+    text-decoration: underline;
+}
+
 .description {
     font-size: 0.8em;
 }
