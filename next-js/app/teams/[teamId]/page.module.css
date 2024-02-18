@@ -16,6 +16,12 @@
     margin: 2em 0;
 }
 
+.meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.3em;
+}
+
 .manager,
 .created,
 .updated {
@@ -28,4 +34,28 @@
 
 .manager a {
     color: #dedede
+}
+
+.teamMembersHeader {
+    font-weight: bold;
+    margin: 0.6em 0;
+    font-size: 1.2em;
+    margin-bottom: 2em;
+}
+
+.teamMembersContainer {
+    display: grid;
+    row-gap: 1.8em;
+}
+
+.tableHeader {
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.teamMember {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
 }
