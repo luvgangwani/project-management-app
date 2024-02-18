@@ -97,6 +97,7 @@ function renderTeamInfo() {
             <div>Updated</div>
           </div>
           {renderTeamMemberInfo()}
+          <Link href={`/teams/${team.id}/add`} className={styles.add}>Add</Link>
         </div>
         {/* TODO: ADD a team member to a team */}
       </div>

@@ -59,3 +59,8 @@
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
 }
+
+.add {
+    color: #529e51;
+    text-decoration: none;
+}
