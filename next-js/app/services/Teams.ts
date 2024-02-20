@@ -82,6 +82,7 @@ class Teams {
             .query(
                 `
                     select
+                    id,
                     name,
                     description,
                     managerFullName,
